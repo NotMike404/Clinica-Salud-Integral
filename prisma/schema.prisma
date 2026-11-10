@@ -1,0 +1,27 @@
+generator client {
+    provider = "prisma-client"
+    output   = "../generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+model Especialidad {
+    id      Int      @id @default(autoincrement())
+    nombre  String   @unique @db.VarChar(100)
+    medicos Medico[]
+
+    @@map("especialidades")
+}
+
+model Medico {
+    id                 Int          @id @default(autoincrement())
+    nombre             String       @db.VarChar(50)
+    apellido           String       @db.VarChar(100)
+    cedula_profesional String       @unique @db.VarChar(100)
+    especialidadId     Int          @map("id_especialidad")
+    especialidad       Especialidad @relation(fields: [especialidadId], references: [id])
+
+    @@map("medicos")
+}
