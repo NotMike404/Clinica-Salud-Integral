@@ -18,10 +18,59 @@ model Especialidad {
 model Medico {
     id                 Int          @id @default(autoincrement())
     nombre             String       @db.VarChar(50)
-    apellido           String       @db.VarChar(100)
+    apellidos          String       @db.VarChar(100)
     cedula_profesional String       @unique @db.VarChar(100)
     especialidadId     Int          @map("id_especialidad")
     especialidad       Especialidad @relation(fields: [especialidadId], references: [id])
+    citas              Cita[]
 
     @@map("medicos")
+}
+
+model Paciente {
+    id               Int      @id @default(autoincrement())
+    nombre           String   @db.VarChar(50)
+    apellidos        String   @db.VarChar(100)
+    sexo             String   @db.VarChar(20)
+    telefono         String   @db.VarChar(20)
+    direccion        String   @db.VarChar(300)
+    email            String   @unique @db.VarChar(150)
+    fecha_nacimiento DateTime @db.Date
+    citas            Cita[]
+
+    @@map("pacientes")
+}
+
+enum EstadoCita {
+    PROGRAMADA
+    COMPLETADA
+    CANCELADA
+}
+
+model Cita {
+    id         Int        @id @default(autoincrement())
+    fecha      DateTime
+    motivo     String?    @db.VarChar(300)
+    estado     EstadoCita @default(PROGRAMADA)
+    pacienteId Int        @map("id_paciente")
+    paciente   Paciente   @relation(fields: [pacienteId], references: [id])
+    medicoId   Int        @map("id_medico")
+    medico     Medico     @relation(fields: [medicoId], references: [id])
+
+    @@map("citas")
+}
+
+enum Role {
+    RECEPCIONISTA
+    MEDICO
+    GERENCIA
+}
+
+model User {
+    id        Int    @id @default(autoincrement())
+    email     String @unique @db.VarChar(150)
+    password  String @db.VarChar(100)
+    role      Role
+
+    @@map("users")
 }

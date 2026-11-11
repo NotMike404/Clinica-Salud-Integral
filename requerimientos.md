@@ -37,11 +37,11 @@ Se identificaron 4 entidades del caso de negocio:
 | Atributo           | Tipo de Dato        | Notas                                       |
 | :----------------- | :------------------ | :------------------------------------------ |
 | `id`               | Entero (Serial)     | [PK], Autoincremental, Obligatorio          |
-| `nombre`           | Texto (VarChar 100) | Obligatorio                                 |
+| `nombre`           | Texto (VarChar 50)  | Obligatorio                                 |
 | `apellidos`        | Texto (VarChar 100) | Obligatorio                                 |
 | `sexo`             | Texto (VarChar 20)  | Obligatorio                                 |
 | `telefono`         | Texto (VarChar 20)  | Obligatorio                                 |
-| `direccion`        | Texto (VarChar 255) | Obligatorio                                 |
+| `direccion`        | Texto (VarChar 300) | Obligatorio                                 |
 | `email`            | Texto (VarChar 150) | Obligatorio, Único, Formato de email válido |
 | `fecha_nacimiento` | Fecha (Date)        | Obligatorio, Fecha no futura                |
 
@@ -75,18 +75,26 @@ Se identificaron 4 entidades del caso de negocio:
 
 ---
 
-## 4. Respuestas Técnicas de Arquitectura
+## 4. Decisioneses de diseño y buenas prácticas
 
-1. **¿Por qué Especialidad tiene su propia tabla?**  
-   Por normalización de datos. Evita redundancias y errores tipográficos de texto.
+1. **¿Por qué Especialidad tiene su propia tabla?**
 
-2. **Tabla de Autenticación (`users`):**  
-   Se integra como componente de infraestructura técnica para el manejo de credenciales (JWT) y autorización por roles (RECEPCIONISTA, MEDICO, GERENCIA).
+   La tabla especialidades por normalizacion de datos, evita redundancias al tener que repetir el nombre de la especialidad en cada médico y previene diferencias de escritura, como por ejemplo: “Cardiología” y “Cardio”.
 
-3. **Manejo del Estado de la Cita:**
+2. **Manejo del Estado de la Cita:**
 
    Se definió un tipo de dato Enum (`EstadoCita`) con los valores `PROGRAMADA`, `COMPLETADA` y `CANCELADA`, con valor inicial `@default(PROGRAMADA)`. Esto garantiza integridad en la base de datos, evitando estados inválidos y modelando el ciclo de vida de la cita sin la limitación binaria de un booleano.
 
-4. **Validación de Fechas (Reglas de Negocio con Zod):**
+3. **Validación de Fechas (Reglas de Negocio con Zod):**
 
    Las restricciones temporales (fecha de nacimiento no futura y citas que no pueden agendarse en el pasado) se validan en la capa de entrada del backend mediante esquemas de **Zod** antes de consultar la base de datos. Esto protege el servidor, evita operaciones innecesarias en PostgreSQL y devuelve errores HTTP 400 claros al cliente.
+
+4. **Tabla de Autenticación (`users`):**
+
+   Se integra como componente de infraestructura técnica para el manejo de credenciales (JWT) y autorización por roles (RECEPCIONISTA, MEDICO, GERENCIA).
+
+5. **Campos de User y asignación del rol:**
+
+   Para iniciar sesión, email y contraseña son suficientes; ya que el email es único. El rol también se almacena para decidir qué acciones puede realizar la cuenta, pero no es una credencial de inicio de sesión. Aunque podrían agregarse nombre y apellidos, no son necesarios para el alcance actual.
+   _NOTA:_
+   En una aplicación real, el servidor no debe confiar en el rol enviado por el usuario al registrarse: debe asignar un rol permitido y reservar los roles privilegiados para un proceso autorizado.
