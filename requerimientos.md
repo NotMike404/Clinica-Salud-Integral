@@ -96,5 +96,12 @@ Se identificaron 4 entidades del caso de negocio:
 5. **Campos de User y asignación del rol:**
 
    Para iniciar sesión, email y contraseña son suficientes; ya que el email es único. El rol también se almacena para decidir qué acciones puede realizar la cuenta, pero no es una credencial de inicio de sesión. Aunque podrían agregarse nombre y apellidos, no son necesarios para el alcance actual.
-   _NOTA:_
-   En una aplicación real, el servidor no debe confiar en el rol enviado por el usuario al registrarse: debe asignar un rol permitido y reservar los roles privilegiados para un proceso autorizado.
+
+6. **Documentación de la API con Swagger:**
+
+   Se instalaron `swagger-autogen` para generar la especificación OpenAPI y `swagger-ui-express` para mostrarla en una página interactiva de Express. En `swagger.cjs` se configuraron los datos de la API, el servidor local y el esquema Bearer para autenticación con JWT. El script de `package.json` permite ejecutar la generación de la documentación.
+
+   **Fuentes consultadas:**
+   - [Swagger Autogen — Quick Start](https://swagger-autogen.github.io/docs/getting-started/quick-start/): configuración, generación del JSON y script; para Express Router indica usar el archivo raíz que monta las rutas.
+   - [Swagger Autogen — Bearer Auth](https://swagger-autogen.github.io/docs/openapi-3/authentication/bearer-auth/): esquema Bearer y anotación `#swagger.security` para documentar las rutas protegidas.
+   - [Swagger UI Express](https://github.com/scottie1984/swagger-ui-express): cómo mostrar el documento OpenAPI en una interfaz dentro de Express.
