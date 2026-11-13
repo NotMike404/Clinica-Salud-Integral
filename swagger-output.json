@@ -4,7 +4,9 @@
     "title": "Clínica-Salud-Integral",
     "description": "API para pacientes, médicos y citas con autenticación",
     "version": "1.0.0",
-    "author": "Miguel Matamoros Cortes"
+    "contact": {
+      "name": "Miguel Matamoros Cortes"
+    }
   },
   "servers": [
     {

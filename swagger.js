@@ -1,4 +1,6 @@
-const swaggerAutogen = require('swagger-autogen')({
+import swaggerAutogenFactory from 'swagger-autogen';
+
+const swaggerAutogen = swaggerAutogenFactory({
   openapi: '3.0.0'
 });
 
@@ -7,7 +9,9 @@ const doc = {
     title: 'Clínica-Salud-Integral',
     description: 'API para pacientes, médicos y citas con autenticación',
     version: '1.0.0',
-    author: 'Miguel Matamoros Cortes'
+    contact: {
+      name: 'Miguel Matamoros Cortes'
+    }
   },
   servers: [
     { url: 'http://localhost:3000' }

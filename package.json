@@ -8,7 +8,7 @@
     "postinstall": "prisma skills sync || exit 0",
     "dev": "tsx src/index.ts",
     "prisma": "prisma",
-    "swagger": "node ./swagger.cjs"
+    "swagger": "node ./swagger.js"
   },
   "keywords": [],
   "author": "",
