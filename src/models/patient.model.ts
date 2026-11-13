@@ -7,8 +7,18 @@ export function getAllPatients()  {
 }
 
 export function getPatientById(id: number) {
-  return prisma.paciente.findUnique({ 
-  where: { id }
+  return prisma.paciente.findUnique({
+    where: { id },
+    include: {
+      citas: {
+        include: {
+          medico: {
+            include: { especialidad: true }
+          }
+        },
+        orderBy: { fecha: 'desc' }
+      }
+    }
   });
 }
 
