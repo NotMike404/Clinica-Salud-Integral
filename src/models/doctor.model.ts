@@ -8,3 +8,10 @@ export function getAllDoctors(specialtyName?: string) {
     include: { especialidad: true }
   })
 }
+
+export function getDoctorById(id: number) {
+  return prisma.medico.findUnique({
+    where: { id },
+    include: { especialidad: true }
+  })
+}
