@@ -7,6 +7,7 @@ import doctorRoutes from './routes/doctor.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import swaggerUi from 'swagger-ui-express';
 import { createRequire } from 'node:module';
+import appointmentRoutes from './routes/appointment.routes.js';
 
 const require = createRequire(import.meta.url);
 const swaggerDocument = require('../swagger-output.json');
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/api/pacientes', patientRoutes);
 app.use('/api/medicos', doctorRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/appointments', appointmentRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get('/', (req, res) => {
   res.send('¡Servidor de la Clinica Salud Integral Listo y Andando! ¡Yeah!🎉');
