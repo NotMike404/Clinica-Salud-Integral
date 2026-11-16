@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.routes.js';
 import swaggerUi from 'swagger-ui-express';
 import { createRequire } from 'node:module';
 import appointmentRoutes from './routes/appointment.routes.js';
+import reportRoutes from './routes/report.routes.js';
 
 const require = createRequire(import.meta.url);
 const swaggerDocument = require('../swagger-output.json');
@@ -15,11 +16,17 @@ const swaggerDocument = require('../swagger-output.json');
 const app = express();
 app.use(express.json());
 
+app.use('/api/reports', reportRoutes);
 app.use('/api/pacientes', patientRoutes);
 app.use('/api/medicos', doctorRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/appointments', appointmentRoutes);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)
+    /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
+);
+
 app.get('/', (req, res) => {
   res.send('¡Servidor de la Clinica Salud Integral Listo y Andando! ¡Yeah!🎉');
 });

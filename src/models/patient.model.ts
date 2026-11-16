@@ -1,7 +1,6 @@
 import prisma from '../config/prisma.js';
 import type { Prisma } from '../../generated/prisma/client.js';
 
-
 export function getAllPatients()  {
   return prisma.paciente.findMany();
 }

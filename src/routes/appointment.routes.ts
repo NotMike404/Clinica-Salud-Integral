@@ -9,7 +9,7 @@ const router: Router = Router();
 router.post(
   '/',
   verifyToken,
-  authorize('RECEPCIONISTA'),
+  authorize('RECEPCIONISTA', 'MEDICO', 'GERENCIA'),
   validateAppointment,
   createAppointmentController
 );

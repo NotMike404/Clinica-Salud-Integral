@@ -1,7 +1,6 @@
 import swaggerAutogenFactory from 'swagger-autogen';
 
 const swaggerAutogen = swaggerAutogenFactory({
-  openapi: '3.0.0'
 });
 
 const doc = {
@@ -32,4 +31,4 @@ const endpointsFiles = [
   './src/index.ts'
 ];
 
-swaggerAutogen(outputFile, endpointsFiles, doc);
+swaggerAutogen( openapi: '3.0.0', outputFile, endpointsFiles, doc);

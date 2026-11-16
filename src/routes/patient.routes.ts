@@ -10,8 +10,8 @@ import { authorize } from '../middlewares/authorize.middleware.js';
 
 const router: Router = Router();
 
-router.get('/', verifyToken, authorize('RECEPCIONISTA'), listPatientsController);
-router.get('/:id', verifyToken, authorize('RECEPCIONISTA'), findPatientByIdController);
+router.get('/', verifyToken, authorize('RECEPCIONISTA', 'MEDICO', 'GERENCIA'), listPatientsController);
+router.get('/:id', verifyToken, authorize('RECEPCIONISTA', 'MEDICO', 'GERENCIA'), findPatientByIdController);
 router.post('/', verifyToken, authorize('RECEPCIONISTA'), validatePatient, createPatientController);
 
 export default router;

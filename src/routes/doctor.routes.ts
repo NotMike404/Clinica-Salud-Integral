@@ -5,6 +5,6 @@ import { authorize } from '../middlewares/authorize.middleware.js';
 
 const router: Router = Router();
 
-router.get('/', verifyToken, authorize('RECEPCIONISTA'), listDoctors);
+router.get('/', verifyToken, authorize('RECEPCIONISTA', 'MEDICO', 'GERENCIA'), listDoctors);
 
 export default router;
