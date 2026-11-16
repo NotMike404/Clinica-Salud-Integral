@@ -1,6 +1,7 @@
 import swaggerAutogenFactory from 'swagger-autogen';
 
 const swaggerAutogen = swaggerAutogenFactory({
+  openapi: '3.0.0'
 });
 
 const doc = {
@@ -13,7 +14,9 @@ const doc = {
     }
   },
   servers: [
-    { url: 'http://localhost:3000' }
+    {
+      url: 'http://localhost:3000'
+    }
   ],
   components: {
     securitySchemes: {
@@ -27,8 +30,6 @@ const doc = {
 };
 
 const outputFile = './swagger-output.json';
-const endpointsFiles = [
-  './src/index.ts'
-];
+const endpointsFiles = ['./src/index.ts'];
 
-swaggerAutogen( openapi: '3.0.0', outputFile, endpointsFiles, doc);
+swaggerAutogen(outputFile, endpointsFiles, doc);

@@ -2,6 +2,27 @@ import type { Request, Response } from 'express';
 import { getPatientById } from '../models/patient.model.js';
 import { getDoctorById } from '../models/doctor.model.js';
 import { createAppointment } from '../models/appointment.model.js';
+import prisma from '../config/prisma.js';
+
+export async function listAppointmentsController(
+  req: Request,
+  res: Response
+) {
+  try {
+    const appointments = await prisma.cita.findMany({
+      include: {
+        paciente: true,
+        medico: true
+      }
+    });
+
+    res.json(appointments);
+  } catch {
+    res.status(500).json({
+      message: 'Error al obtener las citas'
+    });
+  }
+}
 
 export async function createAppointmentController(
   req: Request,

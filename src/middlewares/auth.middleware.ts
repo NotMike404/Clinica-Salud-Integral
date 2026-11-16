@@ -18,6 +18,7 @@ declare global {
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
   const header = req.headers.authorization
 
+
   if (!header || !header.startsWith('Bearer ')) {
     return res.status(401).json({ message: 'Token no proporcionado' })
   }
